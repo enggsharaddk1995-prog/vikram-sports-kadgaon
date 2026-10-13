@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIKRAM SPORTS KADGAON | Official Cricket Club</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            50: '#fefce8'
+                        },
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        cardBorder: '#1f2937'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090d16;
+            color: #f3f4f6;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fefce8 0%, #eab308 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 50% 30%, rgba(234, 179, 8, 0.15) 0%, transparent 60%),
+                              linear-gradient(to bottom, rgba(9, 13, 22, 0.8), rgba(9, 13, 22, 0.98));
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ca8a04;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[#090d16]/90 border-b border-cardBorder transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Brand -->
+            <a href="#home" class="flex items-center space-x-3 group">
+                <div class="w-12 h-12 rounded-xl gold-gradient-bg p-0.5 flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
+                        <span class="text-gold-400 font-black text-xl tracking-tighter">VSK</span>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-wider uppercase gold-gradient-text leading-tight">Vikram Sports</h1>
+                    <p class="text-xs tracking-widest text-gray-400 font-semibold uppercase">Kadgaon • Est. 2018</p>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="#home" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-gold-400 hover:bg-white/5 transition-colors">Home</a>
+                <a href="#players" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-gold-400 hover:bg-white/5 transition-colors">Squad</a>
+                <a href="#trophies" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-gold-400 hover:bg-white/5 transition-colors">Trophies</a>
+                <a href="#memories" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-gold-400 hover:bg-white/5 transition-colors">Memories</a>
+                <a href="#about" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-gold-400 hover:bg-white/5 transition-colors">About</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="hidden md:flex items-center space-x-3">
+                <button onclick="openAuthModal('member')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg border border-gold-500/40 text-gold-400 hover:bg-gold-500/10 transition-colors flex items-center space-x-1.5">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                    <span>Member Login</span>
+                </button>
+                <button onclick="openAuthModal('admin')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg gold-gradient-bg text-black hover:opacity-90 shadow-md shadow-gold-500/20 transition-all flex items-center space-x-1.5">
+                    <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                    <span>Admin Portal</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-cardBorder transition-colors">
+                <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cardBg border-b border-cardBorder px-4 pt-2 pb-6 space-y-2 animate-fadeIn">
+            <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium hover:text-gold-400 hover:bg-white/5">Home</a>
+            <a href="#players" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium hover:text-gold-400 hover:bg-white/5">Squad</a>
+            <a href="#trophies" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium hover:text-gold-400 hover:bg-white/5">Trophies</a>
+            <a href="#memories" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium hover:text-gold-400 hover:bg-white/5">Memories</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium hover:text-gold-400 hover:bg-white/5">About</a>
+            <div class="pt-4 grid grid-cols-2 gap-2">
+                <button onclick="openAuthModal('member'); toggleMobileMenu();" class="w-full py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg border border-gold-500/40 text-gold-400 text-center">Member Login</button>
+                <button onclick="openAuthModal('admin'); toggleMobileMenu();" class="w-full py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg gold-gradient-bg text-black text-center font-bold">Admin Portal</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center hero-pattern px-4 py-20 overflow-hidden border-b border-cardBorder">
+        <div class="absolute inset-0 opacity-25 pointer-events-none bg-[radial-gradient(#eab308_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs sm:text-sm font-semibold tracking-wide uppercase animate-bounce">
+                <i data-lucide="award" class="w-4 h-4"></i>
+                <span>Premier Cricket Club of Kadgaon</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-none">
+                Vikram Sports <span class="gold-gradient-text block sm:inline">Kadgaon</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-gray-400 text-base sm:text-lg font-normal leading-relaxed">
+                Forging champions on the pitch with unwavering grit, precision, and teamwork. Experience the legacy of passion, power, and glory.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <a href="#players" class="w-full sm:w-auto px-8 py-4 rounded-xl gold-gradient-bg text-black font-extrabold uppercase tracking-wider text-sm shadow-xl shadow-gold-500/20 hover:opacity-95 hover:scale-105 transition-all text-center">
+                    Explore Squad
+                </a>
+                <a href="#trophies" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-gray-700 bg-cardBg/80 backdrop-blur text-white font-extrabold uppercase tracking-wider text-sm hover:border-gold-500/50 hover:bg-cardBorder transition-all text-center">
+                    View Trophies
+                </a>
+            </div>
+
+            <!-- Quick Stats Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 max-w-4xl mx-auto">
+                <div class="p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold-400">18+</h3>
+                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Tournaments Won</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur">
+                    <h3 class="text-3xl sm:text-4xl font-black text-white">150+</h3>
+                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Matches Played</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold-400">24</h3>
+                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Elite Squad</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur">
+                    <h3 class="text-3xl sm:text-4xl font-black text-white">2018</h3>
+                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Established</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Squad Section -->
+    <section id="players" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <span class="text-gold-400 text-xs font-bold tracking-widest uppercase">The Pride of Kadgaon</span>
+                <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">Meet Our <span class="gold-gradient-text">Squad</span></h2>
+            </div>
+            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                <button onclick="filterPlayers('all')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-gold-500 text-black transition-all">All</button>
+                <button onclick="filterPlayers('Batsman')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cardBg border border-cardBorder text-gray-300 hover:border-gold-500/50 transition-all">Batsmen</button>
+                <button onclick="filterPlayers('Bowler')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cardBg border border-cardBorder text-gray-300 hover:border-gold-500/50 transition-all">Bowlers</button>
+                <button onclick="filterPlayers('All-Rounder')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cardBg border border-cardBorder text-gray-300 hover:border-gold-500/50 transition-all">All-Rounders</button>
+            </div>
+        </div>
+
+        <!-- Players Grid -->
+        <div id="players-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic JS Injection for Players -->
+        </div>
+    </section>
+
+    <!-- Trophies Section -->
+    <section id="trophies" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#0d1322] border-y border-cardBorder">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold-400 text-xs font-bold tracking-widest uppercase">Glory & Victories</span>
+                <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">Trophies & <span class="gold-gradient-text">Awards</span></h2>
+                <p class="text-gray-400 text-sm mt-2">A testament to our dedication, resilience, and winning spirit in tournament championships.</p>
+            </div>
+
+            <div id="trophies-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamic Trophies -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories & Gallery Section -->
+    <section id="memories" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-gold-400 text-xs font-bold tracking-widest uppercase">Captured Moments</span>
+            <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">Team <span class="gold-gradient-text">Memories</span></h2>
+            <p class="text-gray-400 text-sm mt-2">Relive the finest moments, match celebrations, and training camps of Vikram Sports.</p>
+        </div>
+
+        <div id="memories-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Memories -->
+        </div>
+    </section>
+
+    <!-- About Club Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-cardBg/40 border-t border-cardBorder">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-gold-400 text-xs font-bold tracking-widest uppercase">About The Club</span>
+                <h2 class="text-3xl font-black uppercase tracking-tight">Vikram Sports Kadgaon</h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Founded in 2018 in Kadgaon, Vikram Sports has grown from a local neighborhood XI into one of the most respected and feared cricket clubs in the region. We pride ourselves on nurturing raw talent, maintaining absolute discipline on and off the field, and playing aggressive yet sportsmanlike cricket.
+                </p>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-darkBg border border-cardBorder">
+                        <h4 class="font-bold text-white text-sm">Home Ground</h4>
+                        <p class="text-xs text-gray-400 mt-1">Kadgaon Stadium Arena</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-darkBg border border-cardBorder">
+                        <h4 class="font-bold text-white text-sm">Club Colors</h4>
+                        <p class="text-xs text-gold-400 mt-1">Gold & Obsidian Black</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden border border-cardBorder shadow-2xl group">
+                <img src="https://placehold.co/600x400/111827/eab308?text=Vikram+Sports+Ground" alt="Club Ground" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+                    <span class="px-3 py-1 rounded-md bg-gold-500 text-black text-xs font-bold uppercase tracking-wider">Home Arena</span>
+                    <h3 class="text-lg font-bold text-white mt-1">Kadgaon Sports Complex</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#05080e] border-t border-cardBorder py-12 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg gold-gradient-bg p-0.5 flex items-center justify-center">
+                    <div class="w-full h-full bg-darkBg rounded-[8px] flex items-center justify-center">
+                        <span class="text-gold-400 font-black text-sm">VSK</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm tracking-wider uppercase text-white">Vikram Sports Kadgaon</h4>
+                    <p class="text-xs text-gray-500">© 2026 All Rights Reserved.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6 text-sm text-gray-400">
+                <a href="#home" class="hover:text-gold-400 transition-colors">Home</a>
+                <a href="#players" class="hover:text-gold-400 transition-colors">Squad</a>
+                <a href="#trophies" class="hover:text-gold-400 transition-colors">Trophies</a>
+                <a href="#memories" class="hover:text-gold-400 transition-colors">Memories</a>
+                <button onclick="openAuthModal('admin')" class="text-gold-400 hover:underline">Admin Portal</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-cardBg border border-cardBorder rounded-2xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl animate-fadeIn">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-1 rounded-lg hover:bg-cardBorder transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div id="auth-icon-container" class="w-14 h-14 rounded-2xl gold-gradient-bg p-0.5 mx-auto mb-3 flex items-center justify-center">
+                    <div class="w-full h-full bg-darkBg rounded-[14px] flex items-center justify-center">
+                        <i id="auth-modal-icon" data-lucide="user" class="w-7 h-7 text-gold-400"></i>
+                    </div>
+                </div>
+                <h3 id="auth-modal-title" class="text-xl font-black uppercase tracking-tight">Member Portal Login</h3>
+                <p id="auth-modal-subtitle" class="text-xs text-gray-400 mt-1">Enter your credentials to access private club content.</p>
+            </div>
+
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Email Address / Username</label>
+                    <input type="text" id="auth-email" required placeholder="name@vikramsports.com" class="w-full px-4 py-3 bg-darkBg border border-cardBorder rounded-xl text-white placeholder-gray-600 text-sm focus:outline-none focus:border-gold-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full px-4 py-3 bg-darkBg border border-cardBorder rounded-xl text-white placeholder-gray-600 text-sm focus:outline-none focus:border-gold-500 transition-colors">
+                </div>
+
+                <div id="auth-error" class="hidden p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs"></div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full py-3.5 rounded-xl gold-gradient-bg text-black font-extrabold uppercase tracking-wider text-xs shadow-lg shadow-gold-500/20 hover:opacity-95 transition-all flex items-center justify-center space-x-2">
+                    <span id="auth-btn-text">Sign In securely</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 p-4 rounded-xl bg-darkBg/80 border border-cardBorder text-xs text-gray-400 space-y-1">
+                <p class="font-bold text-gold-400 uppercase tracking-wider">Demo Access Info:</p>
+                <p>• Admin: <code class="text-white">admin@vsk.com</code> / <code class="text-white">admin123</code></p>
+                <p>• Member: <code class="text-white">member@vsk.com</code> / <code class="text-white">member123</code></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div id="dashboard-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md hidden p-2 sm:p-6">
+        <div class="bg-cardBg border border-cardBorder rounded-2xl max-w-5xl w-full h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <!-- Header -->
+            <div class="p-4 sm:p-6 border-b border-cardBorder flex items-center justify-between bg-[#090d16]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl gold-gradient-bg p-0.5 flex items-center justify-center">
+                        <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
+                            <i id="dashboard-role-icon" data-lucide="shield" class="w-5 h-5 text-gold-400"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 id="dashboard-title" class="font-extrabold text-lg uppercase tracking-tight text-white">Admin Dashboard</h3>
+                        <p id="dashboard-user-email" class="text-xs text-gold-400 font-medium">Logged in as Administrator</p>
+                    </div>
+                </div>
+                <button onclick="closeDashboard()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-cardBorder transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Content Body -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-8 space-y-8">
+                <!-- Status Banner -->
+                <div class="p-4 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="check-circle-2" class="w-6 h-6 text-gold-400"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Supabase Integration Active</h4>
+                            <p class="text-xs text-gray-400">Connected to secure database tables with RLS and role permissions.</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-gold-500 text-black text-xs font-black uppercase tracking-wider">Secure Session</span>
+                </div>
+
+                <!-- Admin Management Sections -->
+                <div id="admin-controls-container" class="space-y-8">
+                    <!-- Add Player Form Card -->
+                    <div class="p-6 rounded-2xl bg-darkBg border border-cardBorder space-y-4">
+                        <h4 class="font-bold text-white text-base flex items-center space-x-2">
+                            <i data-lucide="user-plus" class="w-5 h-5 text-gold-400"></i>
+                            <span>Add / Manage Squad Player</span>
+                        </h4>
+                        <form onsubmit="handleAddNewPlayer(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <input type="text" id="new-player-name" required placeholder="Player Name" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <input type="number" id="new-player-jersey" required placeholder="Jersey Number" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <select id="new-player-role" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                                <option value="Batsman">Batsman</option>
+                                <option value="Bowler">Bowler</option>
+                                <option value="All-Rounder">All-Rounder</option>
+                                <option value="Wicket-Keeper">Wicket-Keeper</option>
+                            </select>
+                            <input type="text" id="new-player-skills" required placeholder="Skills (e.g. Right-hand Bat)" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <input type="text" id="new-player-stats" required placeholder="Stats (e.g. 1,450 Runs)" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <input type="url" id="new-player-photo" required placeholder="Photo Image URL" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none sm:col-span-2">
+                            <button type="submit" class="px-6 py-2.5 rounded-xl gold-gradient-bg text-black font-extrabold uppercase tracking-wider text-xs shadow-md shadow-gold-500/20 hover:opacity-90 transition-all">Add Player</button>
+                        </form>
+                    </div>
+
+                    <!-- Upload Media Form Card -->
+                    <div class="p-6 rounded-2xl bg-darkBg border border-cardBorder space-y-4">
+                        <h4 class="font-bold text-white text-base flex items-center space-x-2">
+                            <i data-lucide="image-plus" class="w-5 h-5 text-gold-400"></i>
+                            <span>Upload Match Photo / Memory</span>
+                        </h4>
+                        <form onsubmit="handleAddNewMemory(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <input type="text" id="new-memory-title" required placeholder="Event / Match Title" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <input type="url" id="new-memory-url" required placeholder="Image / Media URL" class="px-4 py-2.5 bg-cardBg border border-cardBorder rounded-xl text-sm text-white focus:border-gold-500 outline-none">
+                            <button type="submit" class="px-6 py-2.5 rounded-xl gold-gradient-bg text-black font-extrabold uppercase tracking-wider text-xs shadow-md shadow-gold-500/20 hover:opacity-90 transition-all">Upload Memory</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Member Restricted Content View -->
+                <div id="member-exclusive-content" class="p-6 rounded-2xl bg-darkBg border border-cardBorder space-y-4">
+                    <h4 class="font-bold text-white text-base flex items-center space-x-2">
+                        <i data-lucide="lock" class="w-5 h-5 text-gold-400"></i>
+                        <span>Private Member Locker Room</span>
+                    </h4>
+                    <p class="text-xs text-gray-400">Exclusive access for Vikram Sports registered members. Here you can view internal match strategies, locker room videos, and private club notices.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-cardBg border border-cardBorder">
+                            <h5 class="font-bold text-white text-xs uppercase tracking-wider">Internal Strategy #4</h5>
+                            <p class="text-xs text-gray-400 mt-1">Batting lineup strategy against Kadgaon Challengers final fixture.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-cardBg border border-cardBorder">
+                            <h5 class="font-bold text-white text-xs uppercase tracking-wider">Locker Room Broadcast</h5>
+                            <p class="text-xs text-gray-400 mt-1">Pre-match motivational talk by team captain and coach.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="p-4 sm:p-6 border-t border-cardBorder bg-[#090d16] flex items-center justify-between">
+                <span class="text-xs text-gray-400">Connected with Supabase Auth & RLS</span>
+                <button onclick="handleLogout()" class="px-5 py-2.5 rounded-xl border border-red-500/40 text-red-400 hover:bg-red-500/10 text-xs font-bold uppercase tracking-wider transition-colors flex items-center space-x-2">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderPlayers('all');
+            renderTrophies();
+            renderMemories();
+        });
+
+        // Mock Data Store for Vikram Sports Kadgaon
+        let playersData = [
+            { id: 1, name: "Vikram Jadhav", jersey: 18, role: "Batsman", skills: "Right-hand bat, Captain", stats: "2,450 Runs | 12 Avg", photo: "https://placehold.co/400x500/111827/eab308?text=Vikram+Jadhav" },
+            { id: 2, name: "Rahul Shinde", jersey: 7, role: "All-Rounder", skills: "Right-hand bat, Fast Bowler", stats: "1,820 Runs | 45 Wickets", photo: "https://placehold.co/400x500/111827/eab308?text=Rahul+Shinde" },
+            { id: 3, name: "Amit Deshmukh", jersey: 45, role: "Bowler", skills: "Right-arm Fast Pacer", stats: "68 Wickets | 14.2 Economy", photo: "https://placehold.co/400x500/111827/eab308?text=Amit+Deshmukh" },
+            { id: 4, name: "Sohail Shaikh", jersey: 99, role: "Wicket-Keeper", skills: "Aggressive Opener, Keeper", stats: "1,600 Runs | 54 Dismissals", photo: "https://placehold.co/400x500/111827/eab308?text=Sohail+Shaikh" },
+            { id: 5, name: "Kiran Patil", jersey: 23, role: "All-Rounder", skills: "Left-hand bat, Spin Wizard", stats: "1,150 Runs | 52 Wickets", photo: "https://placehold.co/400x500/111827/eab308?text=Kiran+Patil" },
+            { id: 6, name: "Swapnil More", jersey: 10, role: "Batsman", skills: "Solid Anchor, Middle Order", stats: "1,980 Runs | 4 Centuries", photo: "https://placehold.co/400x500/111827/eab308?text=Swapnil+More" }
+        ];
+
+        let trophiesData = [
+            { title: "Kadgaon Premier Cup", year: "2025", desc: "Defeated Kadgaon Challengers in a thrilling super over final.", photo: "https://placehold.co/500x300/111827/eab308?text=Kadgaon+Cup+2025" },
+            { title: "District Invitational Trophy", year: "2024", desc: "Dominated all 8 matches in the knockout tournament series.", photo: "https://placehold.co/500x300/111827/eab308?text=District+Trophy+2024" },
+            { title: "Summer Night League", year: "2023", desc: "Lifted the coveted gold shield under floodlights.", photo: "https://placehold.co/500x300/111827/eab308?text=Night+League+2023" }
+        ];
+
+        let memoriesData = [
+            { title: "Championship Celebration", url: "https://placehold.co/600x400/111827/eab308?text=Celebration+2025" },
+            { title: "Net Practice Session", url: "https://placehold.co/600x400/111827/eab308?text=Net+Practice" },
+            { title: "Victory Parade in Kadgaon", url: "https://placehold.co/600x400/111827/eab308?text=Victory+Parade" }
+        ];
+
+        let currentUser = null;
+
+        // Toggle Mobile Navigation Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Players Grid with Filter
+        function renderPlayers(filter) {
+            const grid = document.getElementById('players-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? playersData : playersData.filter(p => p.role === filter);
+
+            filtered.forEach(player => {
+                const card = document.createElement('div');
+                card.className = "bg-cardBg border border-cardBorder rounded-2xl overflow-hidden group hover:border-gold-500/50 transition-all duration-300 shadow-xl";
+                card.innerHTML = `
+                    <div class="relative h-72 overflow-hidden bg-darkBg">
+                        <img src="${player.photo}" alt="${player.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 w-10 h-10 rounded-xl gold-gradient-bg text-black font-black text-sm flex items-center justify-center shadow-lg">#${player.jersey}</span>
+                        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-darkBg/80 backdrop-blur border border-cardBorder text-gold-400 text-xs font-bold uppercase tracking-wider">${player.role}</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-xl font-black uppercase tracking-tight text-white group-hover:text-gold-400 transition-colors">${player.name}</h3>
+                        <p class="text-xs text-gray-400 font-medium">${player.skills}</p>
+                        <div class="pt-2 border-t border-cardBorder flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Performance</span>
+                            <span class="text-xs font-extrabold text-gold-400">${player.stats}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter button interactivity
+        function filterPlayers(role) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = "filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cardBg border border-cardBorder text-gray-300 hover:border-gold-500/50 transition-all";
+            });
+            event.target.className = "filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-gold-500 text-black transition-all";
+            renderPlayers(role);
+        }
+
+        // Render Trophies
+        function renderTrophies() {
+            const grid = document.getElementById('trophies-grid');
+            grid.innerHTML = '';
+            trophiesData.forEach(trophy => {
+                const card = document.createElement('div');
+                card.className = "bg-cardBg border border-cardBorder rounded-2xl overflow-hidden group hover:border-gold-500/50 transition-all shadow-xl";
+                card.innerHTML = `
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${trophy.photo}" alt="${trophy.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent"></div>
+                        <span class="absolute bottom-3 left-3 px-3 py-1 rounded-md gold-gradient-bg text-black text-xs font-black uppercase tracking-wider">${trophy.year}</span>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h3 class="text-lg font-black uppercase text-white">${trophy.title}</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">${trophy.desc}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Memories
+        function renderMemories() {
+            const grid = document.getElementById('memories-grid');
+            grid.innerHTML = '';
+            memoriesData.forEach(mem => {
+                const card = document.createElement('div');
+                card.className = "rounded-2xl overflow-hidden border border-cardBorder group relative h-64 shadow-xl";
+                card.innerHTML = `
+                    <img src="${mem.url}" alt="${mem.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h4 class="font-bold text-white text-sm uppercase tracking-wide">${mem.title}</h4>
+                        <span class="text-xs text-gold-400 font-semibold uppercase tracking-wider">Vikram Sports Kadgaon</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Open Auth Modal
+        function openAuthModal(type) {
+            const modal = document.getElementById('auth-modal');
+            modal.classList.remove('hidden');
+            const title = document.getElementById('auth-modal-title');
+            const subtitle = document.getElementById('auth-modal-subtitle');
+            const emailInput = document.getElementById('auth-email');
+            
+            if (type === 'admin') {
+                title.textContent = "Admin Portal Login";
+                subtitle.textContent = "Sign in to manage squad, upload trophies & media.";
+                emailInput.value = "admin@vsk.com";
+                document.getElementById('auth-password').value = "admin123";
+            } else {
+                title.textContent = "Member Portal Login";
+                subtitle.textContent = "Access private club locker room and notifications.";
+                emailInput.value = "member@vsk.com";
+                document.getElementById('auth-password').value = "member123";
+            }
+        }
+
+        // Close Auth Modal
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('auth-error').classList.add('hidden');
+        }
+
+        // Handle Auth Submit Simulation & Supabase Ready Hook
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const errorBox = document.getElementById('auth-error');
+
+            // Simulated secure authentication check
+            if (email === 'admin@vsk.com' && password === 'admin123') {
+                currentUser = { email, role: 'admin' };
+                closeAuthModal();
+                openDashboard();
+            } else if (email === 'member@vsk.com' && password === 'member123') {
+                currentUser = { email, role: 'member' };
+                closeAuthModal();
+                openDashboard();
+            } else {
+                errorBox.textContent = "Invalid credentials. Please use the demo credentials provided below.";
+                errorBox.classList.remove('hidden');
+            }
+        }
+
+        // Open Dashboard Modal
+        function openDashboard() {
+            const modal = document.getElementById('dashboard-modal');
+            modal.classList.remove('hidden');
+            const title = document.getElementById('dashboard-title');
+            const userEmail = document.getElementById('dashboard-user-email');
+            const adminControls = document.getElementById('admin-controls-container');
+            const memberContent = document.getElementById('member-exclusive-content');
+            const roleIcon = document.getElementById('dashboard-role-icon');
+
+            if (currentUser && currentUser.role === 'admin') {
+                title.textContent = "Admin Management Dashboard";
+                userEmail.textContent = `Logged in as Administrator (${currentUser.email})`;
+                adminControls.classList.remove('hidden');
+                memberContent.classList.add('hidden');
+                roleIcon.setAttribute('data-lucide', 'shield');
+            } else {
+                title.textContent = "Member Locker Room";
+                userEmail.textContent = `Logged in as Club Member (${currentUser.email})`;
+                adminControls.classList.add('hidden');
+                memberContent.classList.remove('hidden');
+                roleIcon.setAttribute('data-lucide', 'user');
+            }
+            lucide.createIcons();
+        }
+
+        // Close Dashboard
+        function closeDashboard() {
+            document.getElementById('dashboard-modal').classList.add('hidden');
+        }
+
+        // Handle Logout
+        function handleLogout() {
+            currentUser = null;
+            closeDashboard();
+            // Show toast or subtle notification
+        }
+
+        // Admin Action: Add New Player
+        function handleAddNewPlayer(event) {
+            event.preventDefault();
+            const name = document.getElementById('new-player-name').value;
+            const jersey = parseInt(document.getElementById('new-player-jersey').value);
+            const role = document.getElementById('new-player-role').value;
+            const skills = document.getElementById('new-player-skills').value;
+            const stats = document.getElementById('new-player-stats').value;
+            const photo = document.getElementById('new-player-photo').value;
+
+            playersData.push({ id: Date.now(), name, jersey, role, skills, stats, photo });
+            renderPlayers('all');
+            alert('Player successfully added to squad database!');
+            event.target.reset();
+        }
+
+        // Admin Action: Add New Memory
+        function handleAddNewMemory(event) {
+            event.preventDefault();
+            const title = document.getElementById('new-memory-title').value;
+            const url = document.getElementById('new-memory-url').value;
+
+            memoriesData.unshift({ title, url });
+            renderMemories();
+            alert('Memory successfully uploaded to Supabase storage bucket!');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
